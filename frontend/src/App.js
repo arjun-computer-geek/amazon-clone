@@ -1,7 +1,10 @@
 import React from 'react';
-import data from './data';
+import {BrowserRouter, Route, Link} from 'react-router-dom';
 
-console.log(data)
+// import data from './data';
+import HometScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
+
 
 function App() {
   const openMenu = () =>{
@@ -17,13 +20,15 @@ function App() {
   }
 
   return (
+  <BrowserRouter>
     <div className="grid-container">
       <header className="header">
         <div className="brand">
             <button onClick={openMenu}>
                 &#9776;
             </button>
-            <a href="index.html">Amazon Clone</a>
+            <Link to="/">Amazon Clone</Link>
+            {/* <a href="index.html">Amazon Clone</a> */}
         </div>
         <div className="header-links">
             <a href="cart.html">Cart</a>
@@ -48,25 +53,10 @@ function App() {
 
       <main id="main" className="main">
         <div className="content">
-          <ul className="products">
-            {
-              data.products.map(product =>
-                <li>
-                  <div className="product">
-                    <img className="product-image" src={product.image} alt="product" />
-                    <div className="product-name">
-                      <a href="product.html">{product.name}</a> 
-                    </div>
-                    <div className="product-brand">{product.brand}</div>
-                    <div className="product-price"> &#8377;{product.price}</div>
-                    <div className="product-rating">{product.rating} Stars ({product.numReviews} Reviews)</div>
-                  </div>
-                </li>
-              )
-            }
-            
+          <Route path="/product/:id" component={ProductScreen} />
+          <Route path="/" exact={true} component={HometScreen} />
 
-          </ul> 
+          
         </div>
       </main>
 
@@ -74,6 +64,7 @@ function App() {
             All Right Reserved.
         </footer>
     </div>
+  </BrowserRouter>
   );
 }
 
