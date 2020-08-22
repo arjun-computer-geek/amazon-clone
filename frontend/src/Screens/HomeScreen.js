@@ -8,10 +8,12 @@ function HomeScreen(props) {
     useEffect(() => {
         const fetchData = async () =>{
             const responce = await fetch('http://localhost:8000/api/products');
-            const data = responce.json();
+            const data = await responce.json();
             setProduct(data);
         }
-    });
+
+        fetchData();
+    },[]);
 
     return( <ul className="products">
     {
