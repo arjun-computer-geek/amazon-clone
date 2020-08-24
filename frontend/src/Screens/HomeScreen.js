@@ -14,7 +14,7 @@ function HomeScreen(props) {
         dispatch(listProducts());
         
     },[]);
-
+    console.log(products);
     return( 
     loading? <div>Loading...</div>:
     error? <div>{error}</div>:
