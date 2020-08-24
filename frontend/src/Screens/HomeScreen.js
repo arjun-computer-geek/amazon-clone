@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
-// import data from './../data';
+import React, { useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import { listProducts } from '../actions/productActions';
 
 function HomeScreen(props) {
 
-    const [products, setProduct] = useState([]);
-    useEffect(() => {
-        const fetchData = async () =>{
-            const responce = await fetch('http://localhost:8000/api/products');
-            const data = await responce.json();
-            setProduct(data);
-        }
+    // const [products, setProduct] = useState([]);
+    const productList = useSelector(state => state.productList);
+    const {products, loading, error} = productList;
+    const dispatch = useDispatch();
 
-        fetchData();
+    useEffect(() => {
+        dispatch(listProducts());
+        
     },[]);
 
-    return( <ul className="products">
+    return( 
+    loading? <div>Loading...</div>:
+    error? <div>{error}</div>:
+    <ul className="products">
     {
         products.map(product =>
-            <li>
+            <li key={product._id}>
             <div className="product">
                 <Link to={'/product/' + product._id}>
                     <img className="product-image" src={product.image} alt="product" />
